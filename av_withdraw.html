@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Telegram Mini App - Withdraw</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#2d3135",
+              "surface-dim": "#d7dae0",
+              "on-secondary-fixed-variant": "#294a63",
+              "surface-container-high": "#e5e8ee",
+              "surface-container": "#ebeef4",
+              "tertiary-fixed-dim": "#ffb77a",
+              "secondary-fixed": "#cce5ff",
+              "surface-tint": "#006497",
+              "secondary-container": "#bddefd",
+              "secondary": "#42617c",
+              "surface-container-low": "#f1f4fa",
+              "primary-fixed-dim": "#92ccff",
+              "primary": "#006193",
+              "surface-bright": "#f7f9ff",
+              "on-primary": "#ffffff",
+              "surface-container-highest": "#dfe3e9",
+              "on-tertiary-fixed": "#2e1500",
+              "on-error": "#ffffff",
+              "inverse-primary": "#92ccff",
+              "inverse-on-surface": "#eef1f7",
+              "outline-variant": "#bfc7d2",
+              "on-secondary": "#ffffff",
+              "on-surface": "#181c20",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed": "#001d31",
+              "primary-fixed": "#cce5ff",
+              "on-surface-variant": "#3f4850",
+              "surface-variant": "#dfe3e9",
+              "on-primary-container": "#fdfcff",
+              "tertiary-fixed": "#ffdcc2",
+              "on-tertiary-container": "#fffbff",
+              "on-secondary-container": "#43627d",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#8b4c00",
+              "error": "#ba1a1a",
+              "on-secondary-fixed": "#001d31",
+              "primary-container": "#007bb9",
+              "outline": "#6f7881",
+              "tertiary-container": "#af6100",
+              "background": "#f7f9ff",
+              "on-primary-fixed-variant": "#004b73",
+              "error-container": "#ffdad6",
+              "surface": "#f7f9ff",
+              "on-error-container": "#93000a",
+              "secondary-fixed-dim": "#aacae9",
+              "on-tertiary-fixed-variant": "#6d3a00",
+              "on-background": "#181c20"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+    </style>
+<style>
+    body { min-height: max(884px, 100dvh); }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+
+<header class="fixed top-0 w-full z-50 bg-[#f7f9ff]/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-5 h-14">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="User" data-alt="minimalist user profile avatar icon with soft blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHb_iPbXiYMLe-35gFOMfWKQ0VFlRWjLZy0DNA91gcu4YE3svVQaFMQTTsuBPA_xuoqd8UvOl2k5dg7ZVqg8905LWdmID3XtIKmok-Mb0MIMG7NIGYrVlLjFoGEO8dgVHWP2pEk-1zO44r_5ECfus9qjgbR5gjQK_dyXqJP2JQdQzmz95R5KOLvKzd_PHh4vKIPkfgNDbz7_JhG21m9xoA3xS5YbsIkDKP7FrUEB3mEi7M_SEE4E1eS6Z0W6fR022eQ3tsrQNCAko"/>
+</div>
+<span class="font-['Inter'] text-sm font-semibold tracking-tight text-[#0088CC]">Telegram Mini App</span>
+</div>
+<button class="text-slate-500 hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+
+<main class="mt-20 px-5 space-y-6 max-w-md mx-auto">
+<section class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary-container p-6 text-on-primary shadow-lg">
+<div class="relative z-10 flex flex-col gap-1">
+<span class="text-xs font-medium uppercase tracking-widest opacity-80">Current Balance</span>
+<h1 id="total-points-display" class="text-4xl font-extrabold tracking-tight">Total Points: ...</h1>
+<div class="mt-4 inline-flex items-center gap-2 bg-white/10 w-fit px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                    Minimal withdrawal: 1000 points
+                </div>
+</div>
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+</section>
+
+<section class="bg-tertiary-fixed border-l-4 border-tertiary p-4 rounded-r-xl flex gap-3 items-start">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant mt-0.5">event_repeat</span>
+<p class="text-sm font-medium text-on-tertiary-fixed-variant leading-relaxed">
+                প্রতি মাসের 10 থেকে 13 এবং 25 থেকে 28 তারিখ withdraw request সাবমিট করুন।
+            </p>
+</section>
+
+<div id="withdraw-methods-wrapper" class="space-y-3 transition-opacity duration-300">
+<h2 class="text-lg font-bold px-1">Withdrawal Methods</h2>
+
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/15 overflow-hidden transition-all duration-300 open:ring-1 open:ring-primary/20" open>
+<summary class="flex items-center justify-between p-5 cursor-pointer list-none select-none">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">currency_bitcoin</span>
+</div>
+<span class="font-bold text-on-surface">1. Crypto</span>
+</div>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-outline">expand_more</span>
+</summary>
+<div class="p-5 pt-0 space-y-5">
+<div class="grid grid-cols-3 gap-2">
+<button class="method-btn flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors" data-type="crypto" data-name="USDT-TRC20">
+<div class="text-[10px] font-bold">USDT</div>
+<div class="text-[8px] opacity-70 uppercase tracking-tighter">TRC20</div>
+</button>
+<button class="method-btn flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors" data-type="crypto" data-name="BNB-BEP20">
+<div class="text-[10px] font-bold">BNB</div>
+<div class="text-[8px] opacity-70 uppercase tracking-tighter">BEP20</div>
+</button>
+<button class="method-btn flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors" data-type="crypto" data-name="LTC">
+<div class="text-[10px] font-bold">LTC</div>
+<div class="text-[8px] opacity-70 uppercase tracking-tighter">Litecoin</div>
+</button>
+</div>
+<div id="crypto-input-section" class="space-y-2 hidden">
+<label class="text-xs font-bold text-on-surface-variant px-1">Wallet Address</label>
+<input id="crypto-input" class="w-full h-12 bg-surface-container-highest border-none rounded-xl px-4 focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="Enter Address" type="text"/>
+</div>
+</div>
+</details>
+
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/15 overflow-hidden transition-all duration-300">
+<summary class="flex items-center justify-between p-5 cursor-pointer list-none select-none">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<span class="font-bold text-on-surface">2. Local (BD)</span>
+</div>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-outline">expand_more</span>
+</summary>
+<div class="p-5 pt-0 space-y-5">
+<div class="grid grid-cols-3 gap-2">
+    <button class="method-btn flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors overflow-hidden" data-type="local" data-name="Bkash">
+        <img alt="bkash" class="h-6 object-contain pointer-events-none" src="bkash.png"/>
+    </button>
+    
+    <button class="method-btn flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors overflow-hidden" data-type="local" data-name="Nagad">
+        <img alt="nagad" class="h-8 object-contain pointer-events-none" src="nagad.png"/>
+    </button>
+    
+    <button class="method-btn flex flex-col items-center justify-center p-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors overflow-hidden" data-type="local" data-name="Rocket">
+        <img alt="rocket" class="h-6 object-contain pointer-events-none" src="rocket.png"/>
+    </button>
+</div>
+
+<div id="local-input-section" class="space-y-2 hidden">
+<label class="text-xs font-bold text-on-surface-variant px-1">Personal Account Number</label>
+<input id="local-input" class="w-full h-12 bg-surface-container-highest border-none rounded-xl px-4 focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all placeholder:text-outline outline-none" placeholder="01XXXXXXXXX" type="tel"/>
+</div>
+</div>
+</details>
+</div>
+
+<div class="pt-4 pb-8">
+<button id="submit-withdraw" class="w-full h-14 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-lg shadow-md active:scale-95 transition-transform duration-100 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:pointer-events-none">
+    Submit Withdrawal Request
+    <span class="material-symbols-outlined">send</span>
+</button>
+<p class="text-center text-[11px] text-outline mt-4 font-medium px-8">
+    By clicking submit, you agree to our withdrawal processing times and security policies.
+</p>
+</div>
+</main>
+
+<nav class="fixed bottom-0 w-full rounded-t-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-slate-200/15 z-50 shadow-[0_-4px_32px_rgba(24,28,32,0.04)]">
+<div class="flex justify-around items-center px-4 pb-safe pt-2 h-16 w-full">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-1" href="apexvault.html">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-1" href="av_tasks.html">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#0088CC]/10 text-[#0088CC] rounded-xl px-3 py-1 transition-transform active:scale-90 duration-200" href="av_withdraw.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Withdraw</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-1" href="av_profile.html">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Profile</span>
+</a>
+</div>
+</nav>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // === CLOUDFLARE CONFIG ===
+    const API_URL = "https://apexvault-backend.cyberx-authority.workers.dev";
+    const tg = window.Telegram?.WebApp;
+    if (tg) tg.expand();
+    const tgUser = tg?.initDataUnsafe?.user;
+    const tgId = tgUser ? String(tgUser.id) : "test_user_001"; 
+
+    // State management
+    let points = 0;
+    let selectedType = null;
+    let selectedMethodName = null;
+    
+    // UI Elements
+    const pointsDisplay = document.getElementById('total-points-display');
+    const withdrawWrapper = document.getElementById('withdraw-methods-wrapper');
+    const submitBtn = document.getElementById('submit-withdraw');
+    
+    const methodBtns = document.querySelectorAll('.method-btn');
+    const cryptoSection = document.getElementById('crypto-input-section');
+    const localSection = document.getElementById('local-input-section');
+    const cryptoInput = document.getElementById('crypto-input');
+    const localInput = document.getElementById('local-input');
+
+    // Custom Toast Notification
+    function showToast(message) {
+        const existing = document.getElementById('av-toast');
+        if(existing) existing.remove();
+
+        const toast = document.createElement('div');
+        toast.id = 'av-toast';
+        toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#2d3135] text-white px-5 py-2.5 rounded-full text-sm font-medium shadow-xl z-[150] transition-opacity duration-300 opacity-0 whitespace-nowrap';
+        toast.innerText = message;
+        document.body.appendChild(toast);
+
+        requestAnimationFrame(() => toast.classList.remove('opacity-0'));
+
+        setTimeout(() => {
+            toast.classList.add('opacity-0');
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
+
+    // Fetch True Balance from Cloudflare
+    fetch(`${API_URL}/api/init`, {
+        method: "POST",
+        body: JSON.stringify({ telegram_id: tgId }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.user) {
+            points = data.user.balance;
+            pointsDisplay.innerText = `Total Points: ${Number.isInteger(points) ? points : points.toFixed(1)}`;
+        }
+    }).catch(err => {
+        console.error("API Load Error:", err);
+        showToast("Error loading balance.");
+    });
+
+    // Date Restriction Logic
+    const today = new Date().getDate();
+    const isWithdrawPeriod = (today >= 10 && today <= 13) || (today >= 25 && today <= 28);
+    
+    if (!isWithdrawPeriod) {
+        withdrawWrapper.classList.add('opacity-50', 'pointer-events-none');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `Not Withdrawal Period <span class="material-symbols-outlined">lock</span>`;
+    }
+
+    // Method Selection Logic
+    methodBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            methodBtns.forEach(b => {
+                b.classList.remove('border-2', 'border-primary', 'bg-primary/5', 'text-primary');
+                b.classList.add('border-outline-variant');
+            });
+            
+            btn.classList.add('border-2', 'border-primary', 'bg-primary/5', 'text-primary');
+            btn.classList.remove('border-outline-variant');
+            
+            selectedType = btn.getAttribute('data-type');
+            selectedMethodName = btn.getAttribute('data-name');
+            
+            if (selectedType === 'crypto') {
+                cryptoSection.classList.remove('hidden');
+                localSection.classList.add('hidden');
+            } else {
+                localSection.classList.remove('hidden');
+                cryptoSection.classList.add('hidden');
+            }
+        });
+    });
+
+    // Accordion logic
+    const accordions = document.querySelectorAll('details');
+    accordions.forEach(acc => {
+        acc.addEventListener('click', (e) => {
+            if (!acc.hasAttribute('open')) {
+                accordions.forEach(other => {
+                    if (other !== acc) other.removeAttribute('open');
+                });
+            }
+        });
+    });
+
+    // Submit Withdrawal securely to Cloudflare
+    submitBtn.addEventListener('click', () => {
+        if (points < 1000) return showToast("Minimum withdrawal is 1000 points.");
+        if (!selectedType || !selectedMethodName) return showToast("Please select a withdrawal method.");
+        
+        let accountDetails = selectedType === 'crypto' ? cryptoInput.value.trim() : localInput.value.trim();
+        if (!accountDetails) return showToast(`Please enter your ${selectedType === 'crypto' ? 'Wallet Address' : 'Account Number'}.`);
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `Processing... <span class="material-symbols-outlined animate-spin">sync</span>`;
+        showToast("Processing Withdrawal...");
+
+        fetch(`${API_URL}/api/action`, {
+            method: "POST",
+            body: JSON.stringify({ 
+                telegram_id: tgId, 
+                action: "withdraw", 
+                amount: points, // Withdraws full balance
+                details: {
+                    type: selectedType,
+                    network: selectedMethodName,
+                    address: accountDetails
+                }
+            }),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                showToast(data.error);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `Submit Withdrawal Request <span class="material-symbols-outlined">send</span>`;
+                return;
+            }
+            
+            // Deduct locally and update UI
+            points = data.user.balance;
+            pointsDisplay.innerText = `Total Points: ${Number.isInteger(points) ? points : points.toFixed(1)}`;
+            localStorage.setItem('av_points', points);
+            
+            // Reset fields
+            cryptoInput.value = '';
+            localInput.value = '';
+            selectedType = null;
+            selectedMethodName = null;
+            cryptoSection.classList.add('hidden');
+            localSection.classList.add('hidden');
+            
+            methodBtns.forEach(b => {
+                b.classList.remove('border-2', 'border-primary', 'bg-primary/5', 'text-primary');
+                b.classList.add('border-outline-variant');
+            });
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `Submit Withdrawal Request <span class="material-symbols-outlined">send</span>`;
+
+            if (tg) tg.showAlert("Withdrawal Request Submitted Successfully!");
+            else alert("Withdrawal Request Submitted Successfully!");
+        })
+        .catch(err => {
+            console.error(err);
+            showToast("Network Error. Please try again.");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `Submit Withdrawal Request <span class="material-symbols-outlined">send</span>`;
+        });
+    });
+});
+</script>
+</body></html>
