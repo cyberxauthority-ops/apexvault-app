@@ -4,6 +4,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Telegram Mini App - Tasks</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -153,6 +154,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tg) tg.expand();
     const tgUser = tg?.initDataUnsafe?.user;
     const tgId = tgUser ? String(tgUser.id) : "test_user_001"; 
+
+    // Update Profile Picture in Header
+    if (tgUser) {
+        const avatarImg = document.querySelector('header img');
+        if (avatarImg) {
+            if (tgUser.photo_url) {
+                avatarImg.src = tgUser.photo_url;
+            } else {
+                avatarImg.src = `https://ui-avatars.com/api/?name=${tgUser.first_name || 'User'}&background=006193&color=fff&rounded=true`;
+            }
+        }
+    }
 
     // === TASK CONFIG ===
     const TOTAL_TASKS = 20;
