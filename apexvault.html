@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Telegram Mini App - Tasks</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -71,185 +72,116 @@
       }
     </script>
 <style>
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .glass-header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        .progress-ring-circle { transition: stroke-dashoffset 0.35s; transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9ff;
+            -webkit-tap-highlight-color: transparent;
+        }
     </style>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
-  </head>
-<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+</head>
+<body class="font-body text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
 <header class="fixed top-0 w-full z-50 bg-[#f7f9ff]/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-5 h-14 w-full">
 <div class="flex items-center gap-3">
-<div class="w-9 h-9 rounded-full overflow-hidden bg-surface-container-highest border border-outline-variant/20">
-<img alt="User" class="w-full h-full object-cover" data-alt="Close-up professional headshot of a young man with a friendly expression in soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT_s7Yrtf--kdr7LSUbEwdKqnAmcpX53X3nY8qL71o7PKhdPXXuEez_AeIhmG4SPyLnxtqDNTSKbJcsfxZ3RPoD_QEUN1nxSQ-7po3Yr4vatfWj-7AsGnKy8x4WYl-3a8RF47lyiDgBft5n4XlJN0rnJsfYN6eIDalElOfN1FfPqhH0WMXcBbBPhAKcVapEB2-ZxAYUEH1OaY3ktxWma2M6u0FeVSbeIrRJvFzysw1Dw8MQnY0c44yHMwM4wmx-_xql8rw-dqnzC0"/>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="minimalist user avatar silhouette on a soft blue circular background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWPkNj9bUPPfjFHNCDFcVL393ziey5vx4UmPA09pMIGL6bWmw1qBZldHe_ntPP3ot-A40FfeJihokf1KKJm7TFOWc1_zEURsLSgOOE4ShUw-LxjSHIH-kiE1_3546mXsaZzG1FyAGyCXY86BUTqEkLFIv2Y7kGGWdtf5N2o8LUE5TSAUrf6eTE1sss4f1DdiqQNMxy5gFO6KPQv8_PLJNdxo9oUYz6f7r00QMg6erGiBPttPoROUMUYDwCbImPWFWIAy6FlTxIBII"/>
 </div>
-<div class="flex flex-col">
-<span class="font-['Inter'] text-sm font-semibold tracking-tight text-on-surface">Alex River</span>
-<span class="text-[10px] text-on-surface-variant font-medium opacity-70">@ariver_dev</span>
+<span class="font-['Inter'] text-sm font-semibold tracking-tight text-[#0088CC] dark:text-[#00a3f5]">Telegram Mini App</span>
 </div>
-</div>
-<div class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/5 active:scale-95 transition-transform duration-100">
-<span class="material-symbols-outlined text-[#0088CC] text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
-<span class="text-[#0088CC] font-bold text-sm tracking-tight">0</span>
-</div>
+<button class="material-symbols-outlined text-[#0088CC] hover:opacity-80 transition-opacity active:scale-95 duration-100">
+            more_vert
+        </button>
 </header>
-<div class="fixed top-14 bg-[#ebeef4] h-[1px] w-full z-50 opacity-30"></div>
-<main class="flex-1 pt-20 pb-24 px-5">
-<section class="flex flex-col items-center justify-center space-y-10 py-6">
-<div class="relative flex items-center justify-center">
-<div class="absolute w-72 h-72 rounded-full bg-primary/5 blur-3xl"></div>
-<svg class="w-64 h-64">
-<circle class="text-surface-container-high" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-width="12"></circle>
-<circle class="text-primary progress-ring-circle" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-dasharray="691.15" stroke-dashoffset="172.78" stroke-linecap="round" stroke-width="12"></circle>
-</svg>
-<div class="absolute flex flex-col items-center text-center">
-<span class="text-on-surface-variant text-[12px] font-medium tracking-widest uppercase mb-1">Daily Limit</span>
-<div class="flex items-baseline gap-1">
-<span class="text-4xl font-extrabold text-on-surface tracking-tight">0</span>
-<span class="text-xl font-semibold text-on-surface-variant">/ 60</span>
-</div>
-<div class="mt-4 flex items-center gap-1.5 bg-surface-container-low px-3 py-1 rounded-full border border-outline-variant/10">
-<span class="material-symbols-outlined text-[14px] text-tertiary">bolt</span>
-<span class="text-[11px] font-bold text-on-surface-variant uppercase tracking-tighter">0% Complete</span>
-</div>
-</div>
-</div>
-<div class="w-full max-w-sm px-4">
-<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-4 px-6 rounded-xl font-bold text-lg shadow-[0_8px_24px_rgba(0,97,147,0.25)] flex items-center justify-center gap-3 active:scale-[0.97] transition-all duration-200">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-                    Watch Ads
-                </button>
-<p class="text-center text-on-surface-variant text-[11px] mt-4 font-medium opacity-60">
-                    Next ad available in 00:00
-                </p>
-</div>
-</section>
-<section class="mt-4 grid grid-cols-2 gap-3">
-<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/5">
-<div class="flex items-center gap-2 mb-3">
-<div class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-lg">calendar_today</span>
-</div>
-<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Streak</span>
-</div>
-<div class="flex items-baseline gap-1">
-<span class="text-2xl font-bold text-on-surface">1</span>
-<span class="text-[11px] font-medium text-on-surface-variant">days</span>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/5">
-<div class="flex items-center gap-2 mb-3">
-<div class="w-8 h-8 rounded-lg bg-tertiary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary text-lg">emoji_events</span>
-</div>
-<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Rank</span>
-</div>
-<div class="flex items-baseline gap-1">
-<span class="text-2xl font-bold text-on-surface">#--</span>
-<span class="text-[11px] font-medium text-on-surface-variant">Top 5%</span>
-</div>
-</div>
-<div class="col-span-2 bg-surface-container-low p-5 rounded-xl flex items-center justify-between border border-outline-variant/10">
-<div class="flex flex-col">
-<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Earning Multiplier</span>
-<span class="text-lg font-bold text-primary">Tap to Upgrade</span>
-</div>
-<div class="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-primary">trending_up</span>
+
+<div class="fixed top-14 w-full z-50 bg-[#ebeef4] h-[1px]"></div>
+
+<main class="pt-20 pb-24 px-5 max-w-md mx-auto">
+<section class="mb-8">
+<div class="bg-primary/5 rounded-xl p-5 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none"></div>
+<div class="flex gap-4 relative z-10">
+<span class="material-symbols-outlined text-primary mt-1" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="text-sm leading-relaxed font-medium text-on-surface-variant">
+                        প্রতি টাস্ক বাটন ক্লিক করে নির্দিষ্ট সময় পর্যন্ত ওই পেইজে থাকুন। USA, CANADA, UK আইপি ব্যবহার করতে পারেন, যদি আইপি ব্যবহার করলে পেজ লোড না হয় তবে আইপি ছাড়া কাজ করুন। সাইন আপ অপশন থাকলে temp-mail ব্যবহার করে সাইন আপ করুন।
+                    </p>
 </div>
 </div>
 </section>
+
+<section class="mb-6 flex items-center justify-between">
+<h2 class="text-xl font-extrabold tracking-tight text-on-surface">Tasks</h2>
+<div class="bg-surface-container px-3 py-1 rounded-full">
+<span id="available-count" class="text-[10px] font-bold uppercase tracking-widest text-primary">20 Available</span>
+</div>
+</section>
+
+<div class="grid grid-cols-2 gap-3" id="task-grid">
+    </div>
 </main>
-<nav class="fixed bottom-0 w-full rounded-t-2xl border-t border-slate-200/15 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-[0_-4px_32px_rgba(24,28,32,0.04)] flex justify-around items-center px-4 pb-safe pt-2 h-16 w-full">
-<a class="flex flex-col items-center justify-center bg-[#0088CC]/10 text-[#0088CC] rounded-xl px-3 py-1 active:scale-90 transition-transform duration-200" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider mt-0.5">Home</span>
+
+<nav class="fixed bottom-0 w-full rounded-t-2xl border-t border-slate-200/15 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-[0_-4px_32px_rgba(24,28,32,0.04)]">
+<div class="flex justify-around items-center px-4 pb-safe pt-2 h-16 w-full">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-90 transition-transform duration-200" href="apexvault.html">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Home</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-90 transition-transform duration-200 rounded-xl px-3 py-1" href="av_tasks.html">
-<span class="material-symbols-outlined">assignment</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider mt-0.5">Tasks</span>
+<a class="flex flex-col items-center justify-center bg-[#0088CC]/10 text-[#0088CC] rounded-xl px-3 py-1 active:scale-90 transition-transform duration-200" href="av_tasks.html">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Tasks</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-90 transition-transform duration-200 rounded-xl px-3 py-1" href="av_withdraw.html">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider mt-0.5">Withdraw</span>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-90 transition-transform duration-200" href="av_withdraw.html">
+<span class="material-symbols-outlined text-[24px]">account_balance_wallet</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Withdraw</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-90 transition-transform duration-200 rounded-xl px-3 py-1" href="av_profile.html">
-<span class="material-symbols-outlined">person</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider mt-0.5">Profile</span>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-90 transition-transform duration-200" href="av_profile.html">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-wider">Profile</span>
 </a>
+</div>
 </nav>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // --- MONETAG IN-APP INTERSTITIAL INITIALIZATION ---
-    if (typeof show_10409688 !== 'undefined') {
-        show_10409688({
-          type: 'inApp',
-          inAppSettings: {
-            frequency: 2,
-            capping: 0.1,
-            interval: 30,
-            timeout: 5,
-            everyPage: false
-          }
-        }).catch(e => console.log("Monetag InApp Init Error:", e));
-    }
-
-    // === YOUR LIVE CLOUDFLARE BACKEND ===
+    // === CLOUDFLARE CONFIG ===
     const API_URL = "https://apexvault-backend.cyberx-authority.workers.dev";
-    
-    // 1. Authenticate Telegram User
     const tg = window.Telegram?.WebApp;
     if (tg) tg.expand();
     const tgUser = tg?.initDataUnsafe?.user;
-    
-    // Fallback ID for testing in normal browser if Telegram isn't detected
     const tgId = tgUser ? String(tgUser.id) : "test_user_001"; 
 
-    // --- Configuration & Local Variables ---
-    const MAX_ADS = 60;
-    const RESET_INTERVAL_MS = 6 * 60 * 60 * 1000; // 6 hours
-    
-    let points = 0; // This will now load securely from Cloudflare!
-    let adCount = parseInt(localStorage.getItem('av_adCount')) || 0;
-    let firstAdTime = parseInt(localStorage.getItem('av_firstAdTime')) || null;
-    let btnPresses = parseInt(localStorage.getItem('av_btnPresses')) || 0;
-    let specialTarget = parseInt(localStorage.getItem('av_specialTarget')) || getRandomInt(8, 11);
-    
-    let isWatching = false;
-    let activeInterval = null;
-    let isSpecialMode = btnPresses >= specialTarget;
+    // Update Profile Picture in Header
+    if (tgUser) {
+        const avatarImg = document.querySelector('header img');
+        if (avatarImg) {
+            if (tgUser.photo_url) {
+                avatarImg.src = tgUser.photo_url;
+            } else {
+                avatarImg.src = `https://ui-avatars.com/api/?name=${tgUser.first_name || 'User'}&background=006193&color=fff&rounded=true`;
+            }
+        }
+    }
 
-    // --- Dynamic UI Selectors ---
-    const ui = {
-        userName: document.querySelector('header .flex-col span:first-child'),
-        userHandle: document.querySelector('header .flex-col span:last-child'),
-        pointsDisplay: document.querySelector('.text-\\[\\#0088CC\\].font-bold.text-sm'),
-        progCurrent: document.querySelector('.text-4xl.font-extrabold'),
-        progMax: document.querySelector('.text-xl.font-semibold'),
-        progPercent: document.querySelector('.text-\\[11px\\].font-bold.text-on-surface-variant'),
-        progRing: document.querySelector('.progress-ring-circle'),
-        actionBtn: document.querySelector('button.bg-gradient-to-br'),
-        statusText: document.querySelector('p.text-center.text-on-surface-variant'),
-        statStreak: document.querySelectorAll('section.mt-4.grid > div')[0]?.querySelector('.text-2xl'),
-        statRank: document.querySelectorAll('section.mt-4.grid > div')[1]?.querySelector('.text-2xl'),
-        statMultiplier: document.querySelector('.col-span-2 .text-primary'),
-        multiplierCard: document.querySelector('.col-span-2') 
-    };
+    // === TASK CONFIG ===
+    const TOTAL_TASKS = 20;
+    const COOLDOWN_MS = 6 * 60 * 60 * 1000; // 6 hours
+    
+    const taskGrid = document.getElementById('task-grid');
+    const availableCountEl = document.getElementById('available-count');
 
-    // --- Inject Popup Overlay for Ads ---
+    // --- Inject Popup Overlay ---
     const overlayHtml = `
         <div id="ad-overlay" class="fixed inset-0 z-[100] bg-[#2d3135]/80 backdrop-blur-md flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300">
             <div class="bg-surface p-8 rounded-3xl shadow-2xl flex flex-col items-center max-w-[85%] text-center border border-outline-variant/20">
                 <span class="material-symbols-outlined text-primary text-5xl mb-4 animate-pulse" style="font-variation-settings: 'FILL' 1;">hourglass_top</span>
                 <h3 class="text-xl font-bold text-on-surface mb-2 tracking-tight" id="ad-title">Task in Progress</h3>
-                <p class="text-xs text-on-surface-variant mb-6 font-medium bg-error-container/20 text-error px-3 py-1.5 rounded-lg border border-error/10" id="ad-warning">
-                    Warning: Do not minimize or leave the app!
+                <p class="text-xs text-primary mb-6 font-medium bg-primary/20 px-3 py-1.5 rounded-lg border border-primary/20">
+                    Browse the sponsor site. Do not close the app!
                 </p>
                 <div class="text-5xl font-extrabold text-primary mb-2" id="ad-countdown">0</div>
                 <span class="text-[10px] uppercase tracking-widest text-outline font-bold">Seconds Remaining</span>
@@ -259,33 +191,22 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.insertAdjacentHTML('beforeend', overlayHtml);
     const popup = document.getElementById('ad-overlay');
     const countdownEl = document.getElementById('ad-countdown');
-    const adTitleEl = document.getElementById('ad-title');
-    const adWarningEl = document.getElementById('ad-warning');
 
-    // === INITIALIZE APP VIA CLOUDFLARE ===
-    function loadUserData() {
-        if (tgUser) {
-            ui.userName.innerText = `${tgUser.first_name} ${tgUser.last_name || ''}`.trim();
-            ui.userHandle.innerText = `@${tgUser.username || tgUser.id}`;
-        }
+    let isTaskActive = false;
+    let currentTaskInterval = null;
+    let targetEndTime = 0;
+    let currentTaskId = null;
+    let currentReward = 0;
 
-        fetch(`${API_URL}/api/init`, {
-            method: "POST",
-            body: JSON.stringify({ telegram_id: tgId }),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.user) {
-                points = data.user.balance; // Set real balance from DB
-                updateUI();
-            }
-        }).catch(err => console.error("API Load Error:", err));
+    // Helper: Format milliseconds
+    function formatTimeLeft(ms) {
+        let totalMins = Math.floor(ms / 60000);
+        let h = Math.floor(totalMins / 60);
+        let m = totalMins % 60;
+        return `${h}h ${m}m`;
     }
 
-    // --- Core Functions ---
-    function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-
+    // Custom Toast
     function showToast(message) {
         const existing = document.getElementById('av-toast');
         if(existing) existing.remove();
@@ -304,208 +225,160 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 2000);
     }
 
-    function checkResetCycle() {
-        if (firstAdTime && (Date.now() - firstAdTime) > RESET_INTERVAL_MS) {
-            adCount = 0;
-            firstAdTime = null;
-            localStorage.setItem('av_adCount', 0);
-            localStorage.removeItem('av_firstAdTime');
-        }
-    }
+    // Core Render Function
+    function renderTasks() {
+        taskGrid.innerHTML = '';
+        let now = Date.now();
+        let availableCount = 0;
 
-    function updateStreak() {
-        const today = new Date();
-        const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-        
-        let lastDate = localStorage.getItem('av_lastLoginDate');
-        let currentStreak = parseInt(localStorage.getItem('av_streakCount')) || 0;
+        for (let i = 1; i <= TOTAL_TASKS; i++) {
+            let lastClicked = localStorage.getItem(`av_task_${i}`);
+            let timePassed = lastClicked ? now - parseInt(lastClicked) : COOLDOWN_MS;
 
-        if (lastDate === dateStr) {
-            // Do nothing
-        } else if (lastDate) {
-            let yesterday = new Date(today);
-            yesterday.setDate(yesterday.getDate() - 1);
-            const yestStr = yesterday.getFullYear() + '-' + String(yesterday.getMonth() + 1).padStart(2, '0') + '-' + String(yesterday.getDate()).padStart(2, '0');
-            
-            if (lastDate === yestStr) currentStreak++;
-            else currentStreak = 1; 
-        } else {
-            currentStreak = 1; 
-        }
-
-        localStorage.setItem('av_lastLoginDate', dateStr);
-        localStorage.setItem('av_streakCount', currentStreak);
-        
-        if (ui.statStreak) ui.statStreak.innerText = currentStreak;
-    }
-
-    function generateMockStats() {
-        const d = new Date();
-        let period = d.getDate() <= 13 ? 1 : (d.getDate() <= 28 ? 2 : 3);
-        const currentEpoch = `${d.getFullYear()}-${d.getMonth()}-${period}`;
-        const savedEpoch = localStorage.getItem('av_statsEpoch');
-        
-        if (savedEpoch !== currentEpoch) {
-            localStorage.setItem('av_statRank', getRandomInt(10, 5000));
-            localStorage.setItem('av_statsEpoch', currentEpoch);
-        }
-
-        if(ui.statRank) ui.statRank.innerText = `#${localStorage.getItem('av_statRank')}`;
-        if(ui.statMultiplier) ui.statMultiplier.innerText = `Tap to Upgrade`;
-    }
-
-    if (ui.multiplierCard) {
-        ui.multiplierCard.classList.add('cursor-pointer', 'active:scale-[0.98]', 'transition-transform');
-        ui.multiplierCard.addEventListener('click', () => { showToast("Coming soon"); });
-    }
-
-    function updateUI() {
-        checkResetCycle();
-        isSpecialMode = btnPresses >= specialTarget;
-
-        ui.pointsDisplay.innerText = Number.isInteger(points) ? points : points.toFixed(1);
-
-        ui.progCurrent.innerText = adCount;
-        ui.progMax.innerText = `/ ${MAX_ADS}`;
-        let percent = Math.min((adCount / MAX_ADS) * 100, 100);
-        ui.progPercent.innerText = `${percent.toFixed(0)}% Complete`;
-
-        const circumference = 691.15;
-        const offset = circumference - (percent / 100) * circumference;
-        ui.progRing.style.strokeDashoffset = offset;
-
-        if (adCount >= MAX_ADS) {
-            ui.actionBtn.classList.add('opacity-50', 'pointer-events-none', 'grayscale');
-            ui.actionBtn.innerHTML = `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span> Limit Reached`;
-            let timeLeft = (firstAdTime + RESET_INTERVAL_MS) - Date.now();
-            let hrs = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
-            let mins = Math.floor((timeLeft / 1000 / 60) % 60);
-            ui.statusText.innerText = `Limit reached. Resets in ${hrs}h ${mins}m`;
-        } else {
-            ui.actionBtn.classList.remove('opacity-50', 'pointer-events-none', 'grayscale');
-            if (isSpecialMode) {
-                ui.actionBtn.innerHTML = `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">ads_click</span> Click / Visit`;
-                ui.actionBtn.className = "w-full bg-gradient-to-br from-[#8b4c00] to-[#af6100] text-on-primary py-4 px-6 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-3 active:scale-[0.97] transition-all duration-200";
-                ui.statusText.innerText = `High Reward Task Available!`;
+            if (timePassed < COOLDOWN_MS) {
+                // Locked State
+                let timeLeft = COOLDOWN_MS - timePassed;
+                taskGrid.insertAdjacentHTML('beforeend', `
+                    <div class="col-span-1 bg-surface-container-low rounded-xl p-4 flex flex-col justify-between min-h-[100px] opacity-70 border border-transparent">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold text-on-surface-variant">Task ${i}</span>
+                            <span class="material-symbols-outlined text-xs text-outline">lock</span>
+                        </div>
+                        <div class="flex items-center gap-1 mt-4">
+                            <span class="material-symbols-outlined text-sm text-tertiary">schedule</span>
+                            <span class="text-xs font-bold text-tertiary timer-text" data-expire="${parseInt(lastClicked) + COOLDOWN_MS}">${formatTimeLeft(timeLeft)}</span>
+                        </div>
+                    </div>
+                `);
             } else {
-                ui.actionBtn.innerHTML = `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span> Watch Ads`;
-                ui.actionBtn.className = "w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-4 px-6 rounded-xl font-bold text-lg shadow-[0_8px_24px_rgba(0,97,147,0.25)] flex items-center justify-center gap-3 active:scale-[0.97] transition-all duration-200";
-                ui.statusText.innerText = `${specialTarget - btnPresses} tasks until High Reward`;
+                // Active State
+                availableCount++;
+                let icon = i % 2 === 0 ? 'rocket_launch' : 'ads_click';
+                let fill = i % 2 === 0 ? "style=\"font-variation-settings: 'FILL' 1;\"" : "";
+
+                taskGrid.insertAdjacentHTML('beforeend', `
+                    <button onclick="startTask(${i})" class="col-span-1 bg-surface-container-lowest rounded-xl p-4 flex flex-col justify-between min-h-[100px] shadow-[0_4px_12px_rgba(0,0,0,0.03)] active:scale-95 transition-transform text-left border border-outline-variant/10">
+                        <div class="flex justify-between items-start w-full">
+                            <span class="text-xs font-bold text-on-surface">Task ${i}</span>
+                            <span class="material-symbols-outlined text-sm text-primary" ${fill}>${icon}</span>
+                        </div>
+                        <span class="text-sm font-bold text-primary mt-4">Start Now</span>
+                    </button>
+                `);
             }
         }
+        availableCountEl.innerText = `${availableCount} Available`;
     }
 
-    // --- Action Button Click ---
-    ui.actionBtn.addEventListener('click', () => {
-        if (adCount >= MAX_ADS) return;
+    // --- Task Click Logic ---
+    window.startTask = function(taskId) {
+        if (isTaskActive) return; 
+        isTaskActive = true;
+        currentTaskId = taskId;
+
+        // 1. Generate random browsing time: 3 to 5 minutes (180s to 300s)
+        const totalSeconds = Math.floor(Math.random() * (300 - 180 + 1)) + 180;
+        targetEndTime = Date.now() + (totalSeconds * 1000);
         
-        isWatching = true;
-        let timeLeft = isSpecialMode ? getRandomInt(168, 180) : getRandomInt(23, 25);
-        
-        // Adjust UI text based on mode
-        if (isSpecialMode) {
-            adTitleEl.innerText = "Visiting Sponsor...";
-            adWarningEl.innerText = "Keep the sponsor tab open!";
-            adWarningEl.classList.replace('bg-error-container/20', 'bg-primary/20');
-            adWarningEl.classList.replace('text-error', 'text-primary');
-            adWarningEl.classList.replace('border-error/10', 'border-primary/20');
+        // 2. Generate random reward: 3, 4, or 5 points
+        currentReward = Math.floor(Math.random() * 3) + 3;
+
+        // 3. Open the Stealth Ad link
+        const targetUrl = 'https://my-ad-stealth.web.app/';
+        if (tg && tg.initData) {
+            tg.openLink(targetUrl);
         } else {
-            adTitleEl.innerText = "Watching Advertisement...";
-            adWarningEl.innerText = "Warning: Do not minimize or leave the app!";
-            adWarningEl.classList.replace('bg-primary/20', 'bg-error-container/20');
-            adWarningEl.classList.replace('text-primary', 'text-error');
-            adWarningEl.classList.replace('border-primary/20', 'border-error/10');
+            window.open(targetUrl, '_blank');
         }
 
-        countdownEl.innerText = timeLeft;
+        // 4. Show the countdown overlay
+        countdownEl.innerText = totalSeconds;
         popup.classList.remove('hidden');
         setTimeout(() => popup.classList.remove('opacity-0'), 10);
 
-        // TRIGGER MONETAG ADS
-        if (typeof show_10409688 !== 'undefined') {
-            if (isSpecialMode) {
-                show_10409688('pop').catch(e => console.log(e));
-            } else {
-                show_10409688().catch(e => console.log(e));
-            }
-        }
-
-        activeInterval = setInterval(() => {
-            timeLeft--;
-            countdownEl.innerText = timeLeft;
-
+        // 5. Start the timer loop
+        currentTaskInterval = setInterval(() => {
+            let timeLeft = Math.ceil((targetEndTime - Date.now()) / 1000);
+            
             if (timeLeft <= 0) {
-                clearInterval(activeInterval);
+                clearInterval(currentTaskInterval);
                 finishTask(true);
+            } else {
+                countdownEl.innerText = timeLeft;
             }
         }, 1000);
-    });
+    };
 
-    // === SAVE EARNINGS TO CLOUDFLARE ===
+    // --- Reward & Database Sync Logic ---
     function finishTask(success) {
-        isWatching = false;
+        isTaskActive = false;
+        
+        // Hide overlay
         popup.classList.add('opacity-0');
         setTimeout(() => popup.classList.add('hidden'), 300);
 
         if (success) {
-            let reward = isSpecialMode ? (Math.random() < 0.5 ? 2.5 : 3.0) : (Math.random() < 0.5 ? 1.0 : 1.5);
-            let title = isSpecialMode ? "Watched High-Reward Ad" : "Watched Standard Ad";
+            // Lock the task for 6 hours locally
+            localStorage.setItem(`av_task_${currentTaskId}`, Date.now());
 
-            // Securely tell the DB to add points
+            // Add points locally to update UI instantly if needed
+            let localPoints = parseFloat(localStorage.getItem('av_points')) || 0;
+            localStorage.setItem('av_points', localPoints + currentReward);
+
+            // SECURE DB SYNC: Tell Cloudflare to add points
             fetch(`${API_URL}/api/action`, {
                 method: "POST",
                 body: JSON.stringify({ 
                     telegram_id: tgId, 
                     action: "earn", 
-                    amount: reward,
-                    title: title 
+                    amount: currentReward,
+                    title: `Completed Task ${currentTaskId}` 
                 }),
                 headers: { 'Content-Type': 'application/json' }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.user) {
-                    points = data.user.balance; // Sync local display with True DB value
-                    updateUI();
-                }
-            }).catch(err => console.error("Error saving reward:", err));
+            }).catch(err => console.error("Database Error:", err));
 
-            if (isSpecialMode) {
-                btnPresses = 0;
-                specialTarget = getRandomInt(8, 11);
-                localStorage.setItem('av_specialTarget', specialTarget);
-            } else {
-                btnPresses++;
-            }
-
-            adCount++;
-            if (!firstAdTime) firstAdTime = Date.now();
-            
-            localStorage.setItem('av_adCount', adCount);
-            localStorage.setItem('av_firstAdTime', firstAdTime);
-            localStorage.setItem('av_btnPresses', btnPresses);
-            updateUI();
+            showToast(`Task ${currentTaskId} completed! +${currentReward} points`);
+            renderTasks();
+        } else {
+            // Task Failed - They returned too early
+            if (tg) tg.showAlert("Task Failed! You closed the advertisement too early.");
+            else alert("Task Failed! You closed the advertisement too early.");
         }
     }
 
-    // --- Anti-Cheat Visibility API ---
+    // --- Smart Anti-Cheat ---
+    // Detects if they switch back to the Mini App before the targetEndTime
     document.addEventListener("visibilitychange", () => {
-        if (document.hidden && isWatching && !isSpecialMode) {
-            clearInterval(activeInterval);
-            finishTask(false);
-            
-            if (window.Telegram?.WebApp) {
-                window.Telegram.WebApp.showAlert("Task Failed! You closed the ad early. No points added.");
-            } else {
-                alert("Task Failed! You closed the ad early. No points added.");
+        // If the document is NOW visible and a task is active...
+        if (!document.hidden && isTaskActive) {
+            // Check if they came back too early (with a 2-second grace period)
+            if (Date.now() < targetEndTime - 2000) {
+                clearInterval(currentTaskInterval);
+                finishTask(false);
             }
         }
     });
 
-    // Boot App
-    updateStreak();
-    generateMockStats();
-    loadUserData(); // This now fetches real DB points on boot!
+    // Passive Timer Update (Updates the lock countdown strings every minute)
+    setInterval(() => {
+        let now = Date.now();
+        let needsFullRender = false;
+
+        document.querySelectorAll('.timer-text').forEach(el => {
+            let expire = parseInt(el.getAttribute('data-expire'));
+            if (now >= expire) {
+                needsFullRender = true;
+            } else {
+                el.innerText = formatTimeLeft(expire - now);
+            }
+        });
+
+        if (needsFullRender) renderTasks();
+    }, 60000);
+
+    // Initial render
+    renderTasks();
 });
 </script>
+</body></html>
 </body></html>
