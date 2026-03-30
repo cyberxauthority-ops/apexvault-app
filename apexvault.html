@@ -4,6 +4,9 @@
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<script src='//libtl.com/sdk.js' data-zone='10409688' data-sdk='show_10409688'></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
@@ -209,21 +212,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tg) tg.expand();
     const tgUser = tg?.initDataUnsafe?.user;
     
-    // Fallback ID for testing in normal browser if Telegram isn't detected
+    // Fallback ID for testing
     const tgId = tgUser ? String(tgUser.id) : "test_user_001"; 
 
     // --- Configuration & Local Variables ---
     const MAX_ADS = 60;
     const RESET_INTERVAL_MS = 6 * 60 * 60 * 1000; // 6 hours
     
-    let points = 0; // This will now load securely from Cloudflare!
+    let points = 0; 
     let adCount = parseInt(localStorage.getItem('av_adCount')) || 0;
     let firstAdTime = parseInt(localStorage.getItem('av_firstAdTime')) || null;
     let btnPresses = parseInt(localStorage.getItem('av_btnPresses')) || 0;
     let specialTarget = parseInt(localStorage.getItem('av_specialTarget')) || getRandomInt(8, 11);
     
-    let isWatching = false;
-    let activeInterval = null;
     let isSpecialMode = btnPresses >= specialTarget;
 
     // --- Dynamic UI Selectors ---
@@ -243,41 +244,16 @@ document.addEventListener("DOMContentLoaded", () => {
         multiplierCard: document.querySelector('.col-span-2') 
     };
 
-    // --- Inject Popup Overlay for Ads ---
-    const overlayHtml = `
-        <div id="ad-overlay" class="fixed inset-0 z-[100] bg-[#2d3135]/80 backdrop-blur-md flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300">
-            <div class="bg-surface p-8 rounded-3xl shadow-2xl flex flex-col items-center max-w-[85%] text-center border border-outline-variant/20">
-                <span class="material-symbols-outlined text-primary text-5xl mb-4 animate-pulse" style="font-variation-settings: 'FILL' 1;">hourglass_top</span>
-                <h3 class="text-xl font-bold text-on-surface mb-2 tracking-tight" id="ad-title">Task in Progress</h3>
-                <p class="text-xs text-on-surface-variant mb-6 font-medium bg-error-container/20 text-error px-3 py-1.5 rounded-lg border border-error/10" id="ad-warning">
-                    Warning: Do not minimize or leave the app!
-                </p>
-                <div class="text-5xl font-extrabold text-primary mb-2" id="ad-countdown">0</div>
-                <span class="text-[10px] uppercase tracking-widest text-outline font-bold">Seconds Remaining</span>
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', overlayHtml);
-    const popup = document.getElementById('ad-overlay');
-    const countdownEl = document.getElementById('ad-countdown');
-    const adTitleEl = document.getElementById('ad-title');
-    const adWarningEl = document.getElementById('ad-warning');
-
     // === INITIALIZE APP VIA CLOUDFLARE ===
     function loadUserData() {
         if (tgUser) {
-            // Update Name and Handle
             ui.userName.innerText = `${tgUser.first_name} ${tgUser.last_name || ''}`.trim();
             ui.userHandle.innerText = `@${tgUser.username || tgUser.id}`;
             
-            // Update Profile Picture
             const avatarImg = document.querySelector('header img');
             if (avatarImg) {
-                if (tgUser.photo_url) {
-                    avatarImg.src = tgUser.photo_url;
-                } else {
-                    avatarImg.src = `https://ui-avatars.com/api/?name=${tgUser.first_name || 'User'}&background=006193&color=fff&rounded=true`;
-                }
+                if (tgUser.photo_url) avatarImg.src = tgUser.photo_url;
+                else avatarImg.src = `https://ui-avatars.com/api/?name=${tgUser.first_name || 'User'}&background=006193&color=fff&rounded=true`;
             }
         }
 
@@ -289,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(res => res.json())
         .then(data => {
             if(data.user) {
-                points = data.user.balance; // Set real balance from DB
+                points = data.user.balance; 
                 updateUI();
             }
         }).catch(err => console.error("API Load Error:", err));
@@ -407,58 +383,54 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- Action Button Click ---
+    // --- Action Button Click (SDK Integrated) ---
     ui.actionBtn.addEventListener('click', () => {
         if (adCount >= MAX_ADS) return;
         
-        isWatching = true;
-        let timeLeft = isSpecialMode ? getRandomInt(168, 180) : getRandomInt(23, 25);
+        // Show Loading State
+        const originalHtml = ui.actionBtn.innerHTML;
+        const originalClass = ui.actionBtn.className;
         
-        // Adjust UI text based on mode
-        if (isSpecialMode) {
-            adTitleEl.innerText = "Visiting Sponsor...";
-            adWarningEl.innerText = "Keep the sponsor tab open!";
-            adWarningEl.classList.replace('bg-error-container/20', 'bg-primary/20');
-            adWarningEl.classList.replace('text-error', 'text-primary');
-            adWarningEl.classList.replace('border-error/10', 'border-primary/20');
-        } else {
-            adTitleEl.innerText = "Watching Advertisement...";
-            adWarningEl.innerText = "Warning: Do not minimize or leave the app!";
-            adWarningEl.classList.replace('bg-primary/20', 'bg-error-container/20');
-            adWarningEl.classList.replace('text-primary', 'text-error');
-            adWarningEl.classList.replace('border-primary/20', 'border-error/10');
-        }
+        ui.actionBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Loading Ad...`;
+        ui.actionBtn.classList.add('opacity-80', 'pointer-events-none');
+        ui.statusText.innerText = "Please wait...";
 
-        countdownEl.innerText = timeLeft;
-        popup.classList.remove('hidden');
-        setTimeout(() => popup.classList.remove('opacity-0'), 10);
-
-        // TRIGGER MONETAG ADS
         if (typeof show_10409688 !== 'undefined') {
             if (isSpecialMode) {
-                show_10409688('pop').catch(e => console.log(e));
+                // High Reward Ad (Popup)
+                show_10409688('pop').then(() => {
+                    finishTask(true);
+                    resetButton(originalHtml, originalClass);
+                }).catch(e => {
+                    console.log("Ad Error:", e);
+                    showToast("Ad failed to load or closed early.");
+                    resetButton(originalHtml, originalClass);
+                });
             } else {
-                show_10409688().catch(e => console.log(e));
+                // Standard Ad (Interstitial)
+                show_10409688().then(() => {
+                    finishTask(true);
+                    resetButton(originalHtml, originalClass);
+                }).catch(e => {
+                    console.log("Ad Error:", e);
+                    showToast("Ad failed to load or closed early.");
+                    resetButton(originalHtml, originalClass);
+                });
             }
+        } else {
+            showToast("Ad Network is still connecting. Try again.");
+            resetButton(originalHtml, originalClass);
         }
 
-        activeInterval = setInterval(() => {
-            timeLeft--;
-            countdownEl.innerText = timeLeft;
-
-            if (timeLeft <= 0) {
-                clearInterval(activeInterval);
-                finishTask(true);
-            }
-        }, 1000);
+        function resetButton(html, cls) {
+            ui.actionBtn.innerHTML = html;
+            ui.actionBtn.className = cls;
+            updateUI(); // Resets status text
+        }
     });
 
     // === SAVE EARNINGS TO CLOUDFLARE ===
     function finishTask(success) {
-        isWatching = false;
-        popup.classList.add('opacity-0');
-        setTimeout(() => popup.classList.add('hidden'), 300);
-
         if (success) {
             let reward = isSpecialMode ? (Math.random() < 0.5 ? 2.5 : 3.0) : (Math.random() < 0.5 ? 1.0 : 1.5);
             let title = isSpecialMode ? "Watched High-Reward Ad" : "Watched Standard Ad";
@@ -477,7 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(res => res.json())
             .then(data => {
                 if (data.user) {
-                    points = data.user.balance; // Sync local display with True DB value
+                    points = data.user.balance; 
                     updateUI();
                 }
             }).catch(err => console.error("Error saving reward:", err));
@@ -496,28 +468,16 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem('av_adCount', adCount);
             localStorage.setItem('av_firstAdTime', firstAdTime);
             localStorage.setItem('av_btnPresses', btnPresses);
+            
+            showToast(`Reward unlocked! +${reward} points`);
             updateUI();
         }
     }
 
-    // --- Anti-Cheat Visibility API ---
-    document.addEventListener("visibilitychange", () => {
-        if (document.hidden && isWatching && !isSpecialMode) {
-            clearInterval(activeInterval);
-            finishTask(false);
-            
-            if (window.Telegram?.WebApp) {
-                window.Telegram.WebApp.showAlert("Task Failed! You closed the ad early. No points added.");
-            } else {
-                alert("Task Failed! You closed the ad early. No points added.");
-            }
-        }
-    });
-
     // Boot App
     updateStreak();
     generateMockStats();
-    loadUserData(); // This now fetches real DB points on boot!
+    loadUserData(); 
 });
 </script>
 </body></html>
