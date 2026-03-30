@@ -4,6 +4,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Profile - Telegram Mini App</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -185,8 +186,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById('profile-name').innerText = fullName;
         document.getElementById('profile-handle').innerText = `@${user.username || user.id}`;
-        document.getElementById('main-avatar').innerText = initial;
-        document.getElementById('header-avatar').innerText = initial;
+        
+        // Setup Avatar - uses photo if available, otherwise generates initials
+        if (user.photo_url) {
+            document.getElementById('header-avatar').innerHTML = `<img src="${user.photo_url}" class="w-full h-full object-cover">`;
+            document.getElementById('main-avatar').innerHTML = `<img src="${user.photo_url}" class="w-full h-full object-cover rounded-full">`;
+        } else {
+            document.getElementById('header-avatar').innerText = initial;
+            document.getElementById('main-avatar').innerText = initial;
+        }
     } else {
         document.getElementById('main-avatar').innerText = "A";
         document.getElementById('header-avatar').innerText = "A";
